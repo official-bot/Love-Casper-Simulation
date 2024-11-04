@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Casper?</title>
+<style>
+  body {
+    background-color: #222;
+    color: #fff;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .glitch {
+    font-size: 1.5em;
+    color: #f07;
+    animation: glitch 0.1s infinite;
+  }
+
+  .container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .popup {
+    display: none;
+    position: absolute;
+    background-color: rgba(240, 112, 171, 0.9);
+    padding: 15px;
+    color: white;
+    border-radius: 8px;
+    width: 80%;
+    left: 10%;
+    top: 30%;
+    z-index: 2;
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  .popup button {
+    padding: 10px;
+    margin: 5px;
+    background-color: white;
+    border: none;
+    color: #333;
+    cursor: pointer;
+  }
+
+  /* Keyframes */
+  @keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+  }
+
+  .countdown {
+    font-size: 2em;
+    color: #f07;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="loveMessage" class="glitch">Do You Love Casper?</div>
+  <div id="popup" class="popup">
+    <p>Show your love?</p>
+    <button onclick="confirmLove()">Yes</button>
+    <button onclick="denyLove()">Not Really</button>
+  </div>
+  <div id="countdownMessage" class="countdown"></div>
+</div>
+
+<script>
+  // Display the love message with glitch effect
+  let loveMessage = document.getElementById('loveMessage');
+  let popup = document.getElementById('popup');
+  let countdownMessage = document.getElementById('countdownMessage');
+
+  // Show pop-up after a short delay
+  setTimeout(() => {
+    popup.style.display = 'block';
+  }, 2000);
+
+  // Countdown function
+  function startCountdown(loveConfirmed) {
+    let countdown = 5;
+    countdownMessage.innerHTML = `Countdown to ${loveConfirmed ? "romance" : "rejection"}: ${countdown}`;
+    let countdownInterval = setInterval(() => {
+      countdown--;
+      countdownMessage.innerHTML = `Countdown to ${loveConfirmed ? "romance" : "rejection"}: ${countdown}`;
+      if (countdown <= 0) {
+        clearInterval(countdownInterval);
+        countdownMessage.innerHTML = loveConfirmed ? "Casper is thrilled!" : "Casper is heartbroken...";
+        loveMessage.style.display = 'none';
+        popup.style.display = 'none';
+      }
+    }, 1000);
+  }
+
+  // Confirm love to Casper
+  function confirmLove() {
+    popup.style.display = 'none';
+    startCountdown(true);
+  }
+
+  // Deny love to Casper
+  function denyLove() {
+    popup.style.display = 'none';
+    startCountdown(false);
+  }
+</script>
+
+</body>
+</html>
